@@ -60,11 +60,14 @@ public class ExportExcel {
                 Row row = sheet.createRow(i);
                 for (int j = 0; j < table.getColumnCount(); j++) {
                     Cell cell = row.createCell(j);
-                    if (j != 3) {
-                        cell.setCellValue((String) table.getValueAt(i - 1, j));
-                    } else {
-                        cell.setCellValue((double) table.getValueAt(i - 1, j));
+                    Object data = table.getValueAt(i-1, j);
+                    if(data instanceof String){
+                        cell.setCellValue((String) data);
+                    } else if(data instanceof Double){
+                        cell.setCellValue((double) data);
                         cell.setCellStyle(cellStyleFormatNumber);
+                    } else if(data instanceof Integer){
+                        cell.setCellValue((int) data);
                     }
                 }
             }
